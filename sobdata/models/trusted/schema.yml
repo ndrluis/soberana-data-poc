@@ -1,0 +1,37 @@
+
+version: 2
+
+sources:
+  - name: public
+    tables:
+      - name: discord_members
+      - name: events
+
+models:
+  - name: discord_members
+    description: contagem de membros
+    columns:
+      - name: interval_start_timestamp
+        description: Data da contagem
+        tests:
+          - unique
+      - name: members_count
+        description: quantidade de membros
+        tests:
+          - not_null
+
+  - name: events
+    description: Eventos relevantes para algum impacto nas analises
+    columns:
+      - name: event_name
+        description: Nome do evento
+        tests:
+          - unique
+      - name: occured_at
+        description: Data do acontecimento do evento
+        tests:
+          - not_null
+      - name: kind
+        description: Tipo de evento
+        tests:
+          - not_null
