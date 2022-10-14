@@ -1,0 +1,28 @@
+name: Data Extraction
+
+on:
+  schedule:
+   - cron: '*/30 * * * *'
+
+jobs:
+  discord:
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v3
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+        cache: 'pip'
+
+    - run: pip install -r requirements.txt
+
+    - name: Extraction
+      run: cd extract/scripts && python discord.py
+
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Discord Data extraction
+        file_pattern: '*.parquet'
