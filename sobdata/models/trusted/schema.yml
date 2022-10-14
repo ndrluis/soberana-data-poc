@@ -11,14 +11,19 @@ models:
   - name: discord_members
     description: contagem de membros
     columns:
-      - name: interval_start_timestamp
+      - name: extracted_at
         description: Data da contagem
         tests:
           - unique
-      - name: members_count
-        description: quantidade de membros
+      - name: approximate_member_count
+        description: quantidade aproximada de membros
         tests:
           - not_null
+      - name: approximate_presence_count
+        description: quantidade aproximada de membros online
+        tests:
+          - not_null
+
 
   - name: events
     description: Eventos relevantes para algum impacto nas analises
@@ -27,7 +32,7 @@ models:
         description: Nome do evento
         tests:
           - unique
-      - name: occured_at
+      - name: occurred_at
         description: Data do acontecimento do evento
         tests:
           - not_null
