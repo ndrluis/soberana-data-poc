@@ -11,11 +11,25 @@ services:
       POSTGRES_DB: soberana_data
       POSTGRES_PORT: 5432
 
+  jupyter:
+    depends_on:
+      - postgres
+    build:
+      context: .
+      dockerfile: jupyter.Dockerfile
+
+    ports:
+      - 8888:8888
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+    volumes:
+      - .:/home/jovyan/work
+
   dbt:
     image: ghcr.io/dbt-labs/dbt-postgres:1.2.2
     working_dir: /usr/local/sobdata/
     entrypoint:
-      - /bin/bash
+      - ""
     volumes:
       - ./sobdata:/usr/local/sobdata
       - ./sobdata/profiles.yml:/root/.dbt/profiles.yml

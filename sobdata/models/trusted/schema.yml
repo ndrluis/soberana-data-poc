@@ -4,8 +4,8 @@ version: 2
 sources:
   - name: public
     tables:
-      - name: discord_members
-      - name: events
+      - name: discord_data
+      - name: events_log
 
 models:
   - name: discord_members

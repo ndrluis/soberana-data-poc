@@ -3,3 +3,6 @@ load_data:
 
 extract_discord:
 	docker compose run --rm dev sh -c "cd extract/scripts && python discord.py"
+
+transform_data: load_data
+	docker compose run --rm dbt sh -c "dbt seed && dbt run && dbt test"
