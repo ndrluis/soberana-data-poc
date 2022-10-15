@@ -26,3 +26,7 @@ jobs:
       with:
         commit_message: Discord Data extraction
         file_pattern: '*.parquet'
+
+        commit_user_name: github-actions[bot]
+        commit_user_email: github-actions[bot]@users.noreply.github.com
+        commit_author: Author <actions@github.com>
