@@ -40,3 +40,13 @@ models:
         description: Tipo de evento
         tests:
           - not_null
+
+  - name: active_discord_members_by_hour
+    description: Média de membros do Discord agrupados por hora e dia da semana
+    columns:
+      - name: week_name
+        description: Dia da Semana
+      - name: hour
+        description: Hora do dia
+      - name: avg_members
+        description: Média de Membros

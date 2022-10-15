@@ -7,5 +7,8 @@ extract_discord:
 transform_data: load_data
 	docker compose run --rm dbt sh -c "dbt seed && dbt run && dbt test"
 
+dbt_seed:
+	docker compose run --rm dbt sh -c "dbt seed"
+
 run_jupyter:
 	docker compose up jupyter --build
