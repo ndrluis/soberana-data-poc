@@ -1,7 +1,7 @@
 {{ config(materialized='table') }}
 
 WITH coerced_types AS (
-  SELECT _started_at::timestamptz AT TIME ZONE 'America/Sao_Paulo' as extracted_at
+  SELECT _started_at::timestamptz AT TIME ZONE 'America/Sao_Paulo' AS extracted_at
         ,CAST(approximate_member_count AS INTEGER)
         ,CAST(approximate_presence_count AS INTEGER)
   FROM {{ source('public', 'discord_data') }}
@@ -14,5 +14,8 @@ enriched_columns AS (
   FROM coerced_types
 )
 
-SELECT *
-FROM enriched_columns
+SELECT ec.*
+      ,dw.name week_name
+FROM enriched_columns ec
+JOIN {{ ref('day_of_the_week') }} dw
+  ON ec.isodow = dw.isodow
