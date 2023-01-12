@@ -33,10 +33,9 @@ register_adapter(np.ndarray, addapt_numpy_array)
 
 df = pd.read_parquet("../extract/data/discord.parquet")
 
-engine = sqlalchemy.create_engine(
-    "postgresql://postgres:postgres@postgres:5432/soberana_data"
-)
+engine = sqlalchemy.create_engine("postgresql://postgres:@postgres:5432/soberana_data")
 
+df = df[df["message"] != "You are being rate limited."]
 
 df.loc[:, "guild.welcome_screen.welcome_channels"] = df[
     "guild.welcome_screen.welcome_channels"
