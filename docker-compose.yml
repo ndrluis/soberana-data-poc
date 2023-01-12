@@ -1,0 +1,44 @@
+version: '3.5'
+services:
+  postgres:
+    image: postgres:14.5
+    command: ["-c", "fsync=off", "-c", "full_page_writes=off", "-c", "synchronous_commit=off"]
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: soberana_data
+      POSTGRES_PORT: 5432
+
+  jupyter:
+    depends_on:
+      - postgres
+    build:
+      context: .
+      dockerfile: jupyter.Dockerfile
+
+    ports:
+      - 8888:8888
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+    volumes:
+      - .:/home/jovyan/work
+
+  dbt:
+    image: ghcr.io/dbt-labs/dbt-postgres:1.2.2
+    working_dir: /usr/local/sobdata/
+    entrypoint:
+      - ""
+    volumes:
+      - ./sobdata:/usr/local/sobdata
+      - ./sobdata/profiles.yml:/root/.dbt/profiles.yml
+
+  dev:
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    working_dir: /usr/local
+    volumes:
+      - ./extract:/usr/local/extract
+      - ./load:/usr/local/load

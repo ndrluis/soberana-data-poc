@@ -1,0 +1,81 @@
+
+version: 2
+
+sources:
+  - name: public
+    tables:
+      - name: discord_data
+      - name: events_log
+
+models:
+  - name: discord_members
+    description: contagem de membros
+    columns:
+      - name: extracted_at
+        description: Data da contagem
+        tests:
+          - unique
+      - name: approximate_member_count
+        description: quantidade aproximada de membros
+        tests:
+          - not_null
+      - name: approximate_presence_count
+        description: quantidade aproximada de membros online
+        tests:
+          - not_null
+
+
+  - name: events
+    description: Eventos relevantes para algum impacto nas analises
+    columns:
+      - name: event_name
+        description: Nome do evento
+        tests:
+          - unique
+      - name: occurred_at
+        description: Data do acontecimento do evento
+        tests:
+          - not_null
+      - name: kind
+        description: Tipo de evento
+        tests:
+          - not_null
+
+  - name: active_discord_members_by_hour
+    description: Média de membros do Discord agrupados por hora e dia da semana
+    columns:
+      - name: week_name
+        description: Dia da Semana
+        tests:
+          - not_null
+
+      - name: hour_interval
+        description: Hora do dia
+        tests:
+          - unique
+          - not_null
+
+      - name: avg_members
+        description: Média de Membros
+        tests:
+          - not_null
+
+  - name: max_active_discord_member_by_day
+    description: Máximo de membros online no Discord por dia
+    columns:
+      - name: week_name
+        description: Dia da Semana
+        tests:
+          - not_null
+
+      - name: day
+        description: Data
+        tests:
+          - not_null
+          - unique
+
+      - name: max_members
+        description: Máximo de membros online
+        tests:
+          - not_null
+
